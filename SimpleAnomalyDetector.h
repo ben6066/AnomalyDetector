@@ -23,6 +23,8 @@ class SimpleAnomalyDetector:public TimeSeriesAnomalyDetector{
 
 	void arrangeData(const TimeSeries& ts, int i, int j, float correlation);
     void insertData(string name1, string name2, float correlation, Line l, float threshold);
+    int detectSample(Point point, Line linearLine, float threshold);
+    bool doesFeatureExist(string feature1, string feature2);
 
 public:
 	SimpleAnomalyDetector();

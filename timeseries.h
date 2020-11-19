@@ -8,6 +8,7 @@
 #include <stdexcept> // std::runtime_error
 #include <sstream> // std::stringstream
 #include <iostream>
+#include "anomaly_detection_util.h"
 
 using namespace std;
 
@@ -23,10 +24,11 @@ class TimeSeries{
 public:
     //Public Methods
 	TimeSeries(const char* CSVfileName);
-    int getNumberOfColumns() const;
-    int getSizeOfColumn() const;
-    string getColumnNameByIndex(int index) const;
-    const float* getDataAsArray(int index) const;
+    int getNumberOfFeatures() const;
+    int getNumberOfSamples() const;
+    string getFeatureNameByIndex(int index) const;
+    vector<float> getFeatureData(int index) const;
+    Point getMatchingPoint(int index, string feature1, string feature2) const;
 };
 
 #endif /* TIMESERIES_H_ */

@@ -69,17 +69,17 @@ void TimeSeries::readFile(const char* fileName){
 }
 
 //The method returns the size of a column - not including the first line
-int TimeSeries:: getSizeOfColumn() const{
+int TimeSeries:: getNumberOfSamples() const{
     return sizeOfColumn;
 }
 
 //The method returns the number of columns in the file
-int TimeSeries:: getNumberOfColumns() const{
+int TimeSeries:: getNumberOfFeatures() const{
     return numberOfColumns;
 }
 
 //The method returns the matching column name
-string TimeSeries::getColumnNameByIndex(int index) const{
+string TimeSeries::getFeatureNameByIndex(int index) const{
     if(flightData.empty() || index > flightData.size() - 1)
     {
         return NULL;
@@ -87,12 +87,23 @@ string TimeSeries::getColumnNameByIndex(int index) const{
     return flightData.at(index).first;
 }
 
-//The method returns a pointer to a specific column as an array
-const float* TimeSeries:: getDataAsArray(int index) const{
-    if(index > flightData.size() - 1){
-        return NULL;
+//The method returns a point of a specific correlated features
+// feature - a specific column in the csv file (not including the feature name)
+vector<float> TimeSeries:: getFeatureData(int index) const{
+   return flightData.at(index).second;
+}
+
+//The method returns a vector of a specific sample
+//sample - a specific row in the csv file (not including the first row)
+Point TimeSeries:: getMatchingPoint(int index, string feature1, string feature2) const{
+    vector<float> temp;
+
+    for(int colIdx = 0; colIdx < numberOfColumns; colIdx++){
+        if(flightData.at(colIdx).first == feature1 || flightData.at(colIdx).first == feature2){
+            temp.push_back(flightData.at(colIdx).second.at(index));
+        }
     }
 
-   return flightData.at(index).second.data();
+    return Point(temp.at(0), temp.at(1));
 }
 
